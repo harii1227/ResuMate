@@ -29,10 +29,10 @@ export const ContactPage: React.FC = () => {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="max-w-5xl mx-auto px-4 py-16 text-left relative"
+      className="max-w-5xl mx-auto px-4 py-16 text-left relative overflow-hidden"
     >
-      {/* Background decoration */}
-      <div className="absolute top-10 left-10 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Background decoration - hidden on mobile to prevent overflow */}
+      <div className="hidden md:block absolute top-10 left-10 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="space-y-4 mb-12 relative z-10">
         <motion.h1 

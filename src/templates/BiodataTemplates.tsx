@@ -206,7 +206,770 @@ export const BiodataTemplateRenderer: React.FC<BiodataTemplateRendererProps> = (
     muslim: 'bg-emerald-50/5 dark:bg-slate-950',
     minimal: 'bg-white dark:bg-slate-900',
     modern: 'bg-gradient-to-b from-white to-slate-50/40 dark:from-slate-900 dark:to-slate-950',
+    'elegant-wedding': 'bg-pink-50/20 dark:bg-slate-900',
+    'premium-royal': 'bg-amber-50/30 dark:bg-slate-950',
+    'modern-minimal': 'bg-white dark:bg-slate-900',
+    'traditional-north': 'bg-red-50/10 dark:bg-slate-900',
+    'traditional-south': 'bg-orange-50/15 dark:bg-slate-900',
+    'islamic-elegant': 'bg-emerald-50/10 dark:bg-slate-950',
+    sikh: 'bg-orange-50/20 dark:bg-slate-900',
+    christian: 'bg-blue-50/15 dark:bg-slate-900',
+    bengali: 'bg-red-50/15 dark:bg-slate-900',
+    contemporary: 'bg-gradient-to-br from-white via-slate-50 to-white dark:from-slate-900 dark:via-slate-950 dark:to-slate-900',
   }[data.templateId] || 'bg-white dark:bg-slate-900';
+
+  // Render template layout based on templateId
+  const renderTemplateLayout = () => {
+    switch (data.templateId) {
+      // 1. TRADITIONAL (Original template)
+      case 'traditional':
+      case 'royal':
+      case 'southindian':
+      case 'muslim':
+      case 'photocentric':
+      case 'classic':
+      case 'minimal':
+      case 'modern':
+        return (
+          <div className="relative z-10 px-4 md:px-8 py-6">
+            {renderReligiousMotif()}
+            <div className="text-center mb-4">
+              <h1
+                className={`font-black tracking-widest uppercase font-serif ${textSizes.title}`}
+                style={{ color: customization.primaryColor }}
+              >
+                {data.templateId === 'traditional' ? 'BIODATA' : 'MARRIAGE BIODATA'}
+              </h1>
+              <div
+                className="h-1 w-24 mx-auto my-2.5 rounded-full"
+                style={{ backgroundColor: customization.primaryColor }}
+              />
+              {personalDetails.fullName && (
+                <h2 className="text-lg md:text-xl font-bold text-slate-800 dark:text-white tracking-tight mt-1">{personalDetails.fullName}</h2>
+              )}
+            </div>
+            {personalDetails.photoUrl && (
+              <div className="flex justify-center mb-4">
+                <div
+                  className="w-28 h-36 overflow-hidden bg-slate-50 dark:bg-slate-950 border-4 shadow-lg rounded"
+                  style={{ borderColor: customization.primaryColor }}
+                >
+                  <img src={personalDetails.photoUrl} alt="Matrimonial Candidate" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            )}
+            <div className={spacingClass}>
+              <section>
+                <h3
+                  className={`font-bold border-b pb-1.5 mb-3 text-left uppercase tracking-widest ${textSizes.h3}`}
+                  style={{ color: customization.primaryColor, borderColor: `${customization.primaryColor}30` }}
+                >
+                  Personal Particulars
+                </h3>
+                <div className="space-y-0.5">
+                  <DetailRow label="Date of Birth" value={personalDetails.dob} />
+                  {!(customization.hiddenSections || []).includes('horoscope') && (
+                    <>
+                      {personalDetails.timeOfBirth && <DetailRow label="Time of Birth" value={personalDetails.timeOfBirth} />}
+                      {personalDetails.placeOfBirth && <DetailRow label="Place of Birth" value={personalDetails.placeOfBirth} />}
+                      {personalDetails.rashi && <DetailRow label="Rashi (Zodiac)" value={personalDetails.rashi} />}
+                      {personalDetails.nakshatra && <DetailRow label="Nakshatra" value={personalDetails.nakshatra} />}
+                    </>
+                  )}
+                  <DetailRow label="Height" value={personalDetails.height} />
+                  {personalDetails.weight && <DetailRow label="Weight" value={personalDetails.weight} />}
+                  {!(customization.hiddenSections || []).includes('horoscope') && (
+                    <>
+                      <DetailRow label="Religion" value={personalDetails.religion} />
+                      {personalDetails.caste && <DetailRow label="Caste / Sub-Caste" value={personalDetails.caste} />}
+                      {personalDetails.gotra && <DetailRow label="Gotra" value={personalDetails.gotra} />}
+                      {personalDetails.manglik && <DetailRow label="Manglik Status" value={personalDetails.manglik} />}
+                    </>
+                  )}
+                  <DetailRow label="Education" value={personalDetails.education} />
+                  <DetailRow label="Profession" value={personalDetails.occupation} />
+                  {personalDetails.salary && <DetailRow label="Annual Income" value={personalDetails.salary} />}
+                  {personalDetails.hobbies && <DetailRow label="Hobbies & Interests" value={personalDetails.hobbies} />}
+                </div>
+              </section>
+              {!(customization.hiddenSections || []).includes('family') && (familyDetails.fatherName || familyDetails.motherName) && (
+                <section>
+                  <h3
+                    className={`font-bold border-b pb-1.5 mb-3 text-left uppercase tracking-widest ${textSizes.h3}`}
+                    style={{ color: customization.primaryColor, borderColor: `${customization.primaryColor}30` }}
+                  >
+                    Family Details
+                  </h3>
+                  <div className="space-y-0.5">
+                    <DetailRow label="Father's Name" value={familyDetails.fatherName} />
+                    {familyDetails.fatherOccupation && <DetailRow label="Father's Occupation" value={familyDetails.fatherOccupation} />}
+                    <DetailRow label="Mother's Name" value={familyDetails.motherName} />
+                    {familyDetails.motherOccupation && <DetailRow label="Mother's Occupation" value={familyDetails.motherOccupation} />}
+                    {familyDetails.brothers && <DetailRow label="Brothers" value={familyDetails.brothers} />}
+                    {familyDetails.sisters && <DetailRow label="Sisters" value={familyDetails.sisters} />}
+                    {familyDetails.familyType && <DetailRow label="Family Setup" value={`${familyDetails.familyType} Family`} />}
+                    {familyDetails.familyValues && <DetailRow label="Family Values" value={familyDetails.familyValues} />}
+                  </div>
+                </section>
+              )}
+              {!(customization.hiddenSections || []).includes('contact') && (
+                <section>
+                  <h3
+                    className={`font-bold border-b pb-1.5 mb-3 text-left uppercase tracking-widest ${textSizes.h3}`}
+                    style={{ color: customization.primaryColor, borderColor: `${customization.primaryColor}30` }}
+                  >
+                    Contact Information
+                  </h3>
+                  <div className="space-y-0.5">
+                    <DetailRow label="Mobile Number" value={contactDetails.mobile} />
+                    {contactDetails.alternateMobile && <DetailRow label="Alternate Mobile" value={contactDetails.alternateMobile} />}
+                    {contactDetails.email && <DetailRow label="Email Address" value={contactDetails.email} />}
+                    <DetailRow label="Residence Address" value={contactDetails.address} />
+                  </div>
+                </section>
+              )}
+              {!(customization.hiddenSections || []).includes('expectations') && (additionalInfo.aboutMe || additionalInfo.expectations || additionalInfo.languagesKnown) && (
+                <section>
+                  <h3
+                    className={`font-bold border-b pb-1.5 mb-3 text-left uppercase tracking-widest ${textSizes.h3}`}
+                    style={{ color: customization.primaryColor, borderColor: `${customization.primaryColor}30` }}
+                  >
+                    Expectations & Profile
+                  </h3>
+                  <div className="space-y-4 text-left pt-2">
+                    {additionalInfo.aboutMe && (
+                      <div>
+                        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">About Me</h4>
+                        <p className={`text-slate-650 dark:text-slate-300 font-medium leading-relaxed whitespace-pre-line mt-1 ${textSizes.value}`}>
+                          {additionalInfo.aboutMe}
+                        </p>
+                      </div>
+                    )}
+                    {additionalInfo.expectations && (
+                      <div>
+                        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Partner Expectations</h4>
+                        <p className={`text-slate-650 dark:text-slate-300 font-medium leading-relaxed whitespace-pre-line mt-1 ${textSizes.value}`}>
+                          {additionalInfo.expectations}
+                        </p>
+                      </div>
+                    )}
+                    {additionalInfo.languagesKnown && (
+                      <div className="flex items-center text-xs">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mr-2">Languages:</span>
+                        <span className={`text-slate-800 dark:text-slate-200 font-semibold ${textSizes.value}`}>{additionalInfo.languagesKnown}</span>
+                      </div>
+                    )}
+                  </div>
+                </section>
+              )}
+            </div>
+          </div>
+        );
+
+      // 2. ELEGANT WEDDING (Soft pastels, floral borders)
+      case 'elegant-wedding':
+        return (
+          <div className="relative z-10 px-6 md:px-10 py-8">
+            <div className="text-center mb-6">
+              <h1
+                className={`font-serif font-bold tracking-wide ${textSizes.title}`}
+                style={{ color: '#be185d' }}
+              >
+                Marriage Biodata
+              </h1>
+              <div className="h-0.5 w-32 mx-auto my-3 bg-gradient-to-r from-transparent via-pink-400 to-transparent" />
+              {personalDetails.fullName && (
+                <h2 className="text-xl md:text-2xl font-semibold text-slate-800 mt-2">{personalDetails.fullName}</h2>
+              )}
+            </div>
+            {personalDetails.photoUrl && (
+              <div className="flex justify-center mb-6">
+                <div className="w-32 h-40 overflow-hidden rounded-full border-4 border-pink-300 shadow-lg">
+                  <img src={personalDetails.photoUrl} alt="Profile" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            )}
+            <div className={spacingClass}>
+              <section>
+                <h3 className={`font-serif font-semibold text-pink-700 border-b border-pink-200 pb-2 mb-4 ${textSizes.h3}`}>Personal Details</h3>
+                <div className="space-y-1">
+                  <DetailRow label="Date of Birth" value={personalDetails.dob} />
+                  <DetailRow label="Height" value={personalDetails.height} />
+                  <DetailRow label="Education" value={personalDetails.education} />
+                  <DetailRow label="Profession" value={personalDetails.occupation} />
+                  <DetailRow label="Hobbies" value={personalDetails.hobbies} />
+                </div>
+              </section>
+              {!(customization.hiddenSections || []).includes('family') && (
+                <section>
+                  <h3 className={`font-serif font-semibold text-pink-700 border-b border-pink-200 pb-2 mb-4 ${textSizes.h3}`}>Family Background</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="Father's Name" value={familyDetails.fatherName} />
+                    <DetailRow label="Mother's Name" value={familyDetails.motherName} />
+                    <DetailRow label="Family Type" value={familyDetails.familyType} />
+                  </div>
+                </section>
+              )}
+              {!(customization.hiddenSections || []).includes('contact') && (
+                <section>
+                  <h3 className={`font-serif font-semibold text-pink-700 border-b border-pink-200 pb-2 mb-4 ${textSizes.h3}`}>Contact</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="Mobile" value={contactDetails.mobile} />
+                    <DetailRow label="Email" value={contactDetails.email} />
+                    <DetailRow label="Address" value={contactDetails.address} />
+                  </div>
+                </section>
+              )}
+            </div>
+          </div>
+        );
+
+      // 3. PREMIUM ROYAL (Gold/cream, royal palace theme)
+      case 'premium-royal':
+        return (
+          <div className="relative z-10 px-8 md:px-12 py-10">
+            <div className="text-center mb-8">
+              <div className="inline-block px-6 py-2 bg-amber-100 rounded-full mb-4">
+                <h1 className="font-serif font-bold text-amber-800 tracking-widest text-sm uppercase">Royal Marriage Profile</h1>
+              </div>
+              {personalDetails.fullName && (
+                <h2 className="text-2xl md:text-3xl font-serif font-bold text-slate-900 mt-3">{personalDetails.fullName}</h2>
+              )}
+            </div>
+            {personalDetails.photoUrl && (
+              <div className="flex justify-center mb-8">
+                <div className="w-36 h-44 overflow-hidden border-8 border-amber-400 shadow-2xl">
+                  <img src={personalDetails.photoUrl} alt="Profile" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            )}
+            <div className={spacingClass}>
+              <section>
+                <h3 className={`font-serif font-bold text-amber-800 border-b-2 border-amber-300 pb-2 mb-4 ${textSizes.h3}`}>Personal Information</h3>
+                <div className="space-y-1">
+                  <DetailRow label="Date of Birth" value={personalDetails.dob} />
+                  <DetailRow label="Height" value={personalDetails.height} />
+                  <DetailRow label="Education" value={personalDetails.education} />
+                  <DetailRow label="Profession" value={personalDetails.occupation} />
+                  {personalDetails.salary && <DetailRow label="Income" value={personalDetails.salary} />}
+                </div>
+              </section>
+              {!(customization.hiddenSections || []).includes('family') && (
+                <section>
+                  <h3 className={`font-serif font-bold text-amber-800 border-b-2 border-amber-300 pb-2 mb-4 ${textSizes.h3}`}>Family Details</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="Father's Name" value={familyDetails.fatherName} />
+                    <DetailRow label="Father's Occupation" value={familyDetails.fatherOccupation} />
+                    <DetailRow label="Mother's Name" value={familyDetails.motherName} />
+                    <DetailRow label="Siblings" value={`${familyDetails.brothers || '0'} Brothers, ${familyDetails.sisters || '0'} Sisters`} />
+                  </div>
+                </section>
+              )}
+              {!(customization.hiddenSections || []).includes('contact') && (
+                <section>
+                  <h3 className={`font-serif font-bold text-amber-800 border-b-2 border-amber-300 pb-2 mb-4 ${textSizes.h3}`}>Contact Information</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="Mobile" value={contactDetails.mobile} />
+                    <DetailRow label="Email" value={contactDetails.email} />
+                    <DetailRow label="Address" value={contactDetails.address} />
+                  </div>
+                </section>
+              )}
+            </div>
+          </div>
+        );
+
+      // 4. MODERN MINIMAL (Clean, contemporary, minimal)
+      case 'modern-minimal':
+        return (
+          <div className="relative z-10 px-8 md:px-12 py-8">
+            <div className="flex items-start justify-between mb-8">
+              <div>
+                <h1 className="text-3xl font-light text-slate-900">{personalDetails.fullName || 'Name'}</h1>
+                <p className="text-sm text-slate-500 mt-1">Marriage Biodata</p>
+              </div>
+              {personalDetails.photoUrl && (
+                <div className="w-24 h-32 overflow-hidden rounded-lg bg-slate-100">
+                  <img src={personalDetails.photoUrl} alt="Profile" className="w-full h-full object-cover" />
+                </div>
+              )}
+            </div>
+            <div className={spacingClass}>
+              <section>
+                <h3 className={`font-semibold text-slate-700 border-b border-slate-200 pb-2 mb-4 ${textSizes.h3}`}>About</h3>
+                <div className="space-y-1">
+                  <DetailRow label="DOB" value={personalDetails.dob} />
+                  <DetailRow label="Height" value={personalDetails.height} />
+                  <DetailRow label="Education" value={personalDetails.education} />
+                  <DetailRow label="Work" value={personalDetails.occupation} />
+                </div>
+              </section>
+              {!(customization.hiddenSections || []).includes('family') && (
+                <section>
+                  <h3 className={`font-semibold text-slate-700 border-b border-slate-200 pb-2 mb-4 ${textSizes.h3}`}>Family</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="Father" value={familyDetails.fatherName} />
+                    <DetailRow label="Mother" value={familyDetails.motherName} />
+                    <DetailRow label="Family Type" value={familyDetails.familyType} />
+                  </div>
+                </section>
+              )}
+              {!(customization.hiddenSections || []).includes('contact') && (
+                <section>
+                  <h3 className={`font-semibold text-slate-700 border-b border-slate-200 pb-2 mb-4 ${textSizes.h3}`}>Contact</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="Phone" value={contactDetails.mobile} />
+                    <DetailRow label="Email" value={contactDetails.email} />
+                    <DetailRow label="Location" value={contactDetails.address} />
+                  </div>
+                </section>
+              )}
+            </div>
+          </div>
+        );
+
+      // 5. TRADITIONAL NORTH (North Indian traditional style)
+      case 'traditional-north':
+        return (
+          <div className="relative z-10 px-6 md:px-10 py-8">
+            <div className="text-center mb-6">
+              <div className="inline-block px-4 py-1 bg-red-100 rounded mb-3">
+                <h1 className="font-serif font-bold text-red-800 tracking-wider text-sm">विवाह बायोडाटा</h1>
+              </div>
+              {personalDetails.fullName && (
+                <h2 className="text-2xl font-serif font-bold text-slate-900 mt-2">{personalDetails.fullName}</h2>
+              )}
+            </div>
+            {personalDetails.photoUrl && (
+              <div className="flex justify-center mb-6">
+                <div className="w-32 h-40 overflow-hidden border-4 border-red-600 rounded-lg shadow-lg">
+                  <img src={personalDetails.photoUrl} alt="Profile" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            )}
+            <div className={spacingClass}>
+              <section>
+                <h3 className={`font-serif font-bold text-red-800 border-b-2 border-red-300 pb-2 mb-4 ${textSizes.h3}`}>व्यक्तिगत जानकारी</h3>
+                <div className="space-y-1">
+                  <DetailRow label="जन्म तिथि" value={personalDetails.dob} />
+                  <DetailRow label="ऊंचाई" value={personalDetails.height} />
+                  <DetailRow label="शिक्षा" value={personalDetails.education} />
+                  <DetailRow label="व्यवसाय" value={personalDetails.occupation} />
+                </div>
+              </section>
+              {!(customization.hiddenSections || []).includes('family') && (
+                <section>
+                  <h3 className={`font-serif font-bold text-red-800 border-b-2 border-red-300 pb-2 mb-4 ${textSizes.h3}`}>परिवार की जानकारी</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="पिता का नाम" value={familyDetails.fatherName} />
+                    <DetailRow label="माता का नाम" value={familyDetails.motherName} />
+                    <DetailRow label="परिवार प्रकार" value={familyDetails.familyType} />
+                  </div>
+                </section>
+              )}
+              {!(customization.hiddenSections || []).includes('contact') && (
+                <section>
+                  <h3 className={`font-serif font-bold text-red-800 border-b-2 border-red-300 pb-2 mb-4 ${textSizes.h3}`}>संपर्क</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="मोबाइल" value={contactDetails.mobile} />
+                    <DetailRow label="पता" value={contactDetails.address} />
+                  </div>
+                </section>
+              )}
+            </div>
+          </div>
+        );
+
+      // 6. TRADITIONAL SOUTH (Enhanced South Indian temple style)
+      case 'traditional-south':
+        return (
+          <div className="relative z-10 px-6 md:px-10 py-8">
+            <div className="text-center mb-6">
+              <h1 className="font-serif font-bold text-orange-800 tracking-widest text-sm">திருமண விவரம்</h1>
+              <div className="h-0.5 w-24 mx-auto my-2 bg-orange-400" />
+              {personalDetails.fullName && (
+                <h2 className="text-2xl font-serif font-bold text-slate-900 mt-2">{personalDetails.fullName}</h2>
+              )}
+            </div>
+            {personalDetails.photoUrl && (
+              <div className="flex justify-center mb-6">
+                <div className="w-32 h-40 overflow-hidden border-4 border-orange-500 rounded-lg shadow-lg">
+                  <img src={personalDetails.photoUrl} alt="Profile" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            )}
+            <div className={spacingClass}>
+              <section>
+                <h3 className={`font-serif font-bold text-orange-800 border-b-2 border-orange-300 pb-2 mb-4 ${textSizes.h3}`}>தனிப்பட்ட விவரங்கள்</h3>
+                <div className="space-y-1">
+                  <DetailRow label="பிறந்த தேதி" value={personalDetails.dob} />
+                  <DetailRow label="உயரம்" value={personalDetails.height} />
+                  <DetailRow label="கல்வி" value={personalDetails.education} />
+                  <DetailRow label="தொழில்" value={personalDetails.occupation} />
+                </div>
+              </section>
+              {!(customization.hiddenSections || []).includes('family') && (
+                <section>
+                  <h3 className={`font-serif font-bold text-orange-800 border-b-2 border-orange-300 pb-2 mb-4 ${textSizes.h3}`}>குடும்ப விவரம்</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="தந்தையின் பெயர்" value={familyDetails.fatherName} />
+                    <DetailRow label="தாயின் பெயர்" value={familyDetails.motherName} />
+                    <DetailRow label="குடும்ப வகை" value={familyDetails.familyType} />
+                  </div>
+                </section>
+              )}
+              {!(customization.hiddenSections || []).includes('contact') && (
+                <section>
+                  <h3 className={`font-serif font-bold text-orange-800 border-b-2 border-orange-300 pb-2 mb-4 ${textSizes.h3}`}>தொடர்பு</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="மொபைல்" value={contactDetails.mobile} />
+                    <DetailRow label="முகவரி" value={contactDetails.address} />
+                  </div>
+                </section>
+              )}
+            </div>
+          </div>
+        );
+
+      // 7. ISLAMIC ELEGANT (Refined Islamic geometric patterns)
+      case 'islamic-elegant':
+        return (
+          <div className="relative z-10 px-6 md:px-10 py-8">
+            <div className="text-center mb-6">
+              <div className="inline-block px-4 py-2 bg-emerald-100 rounded-lg mb-3">
+                <h1 className="font-serif font-bold text-emerald-800 tracking-wider text-sm">Islamic Marriage Profile</h1>
+              </div>
+              {personalDetails.fullName && (
+                <h2 className="text-2xl font-serif font-bold text-slate-900 mt-2">{personalDetails.fullName}</h2>
+              )}
+            </div>
+            {personalDetails.photoUrl && (
+              <div className="flex justify-center mb-6">
+                <div className="w-32 h-40 overflow-hidden border-4 border-emerald-600 rounded-lg shadow-lg">
+                  <img src={personalDetails.photoUrl} alt="Profile" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            )}
+            <div className={spacingClass}>
+              <section>
+                <h3 className={`font-serif font-bold text-emerald-800 border-b-2 border-emerald-300 pb-2 mb-4 ${textSizes.h3}`}>Personal Information</h3>
+                <div className="space-y-1">
+                  <DetailRow label="Date of Birth" value={personalDetails.dob} />
+                  <DetailRow label="Height" value={personalDetails.height} />
+                  <DetailRow label="Education" value={personalDetails.education} />
+                  <DetailRow label="Profession" value={personalDetails.occupation} />
+                </div>
+              </section>
+              {!(customization.hiddenSections || []).includes('family') && (
+                <section>
+                  <h3 className={`font-serif font-bold text-emerald-800 border-b-2 border-emerald-300 pb-2 mb-4 ${textSizes.h3}`}>Family Details</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="Father's Name" value={familyDetails.fatherName} />
+                    <DetailRow label="Mother's Name" value={familyDetails.motherName} />
+                    <DetailRow label="Family Type" value={familyDetails.familyType} />
+                  </div>
+                </section>
+              )}
+              {!(customization.hiddenSections || []).includes('contact') && (
+                <section>
+                  <h3 className={`font-serif font-bold text-emerald-800 border-b-2 border-emerald-300 pb-2 mb-4 ${textSizes.h3}`}>Contact</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="Mobile" value={contactDetails.mobile} />
+                    <DetailRow label="Email" value={contactDetails.email} />
+                    <DetailRow label="Address" value={contactDetails.address} />
+                  </div>
+                </section>
+              )}
+            </div>
+          </div>
+        );
+
+      // 8. SIKH (Sikh cultural elements, orange/blue)
+      case 'sikh':
+        return (
+          <div className="relative z-10 px-6 md:px-10 py-8">
+            <div className="text-center mb-6">
+              <div className="inline-block px-4 py-2 bg-orange-100 rounded-lg mb-3">
+                <h1 className="font-serif font-bold text-orange-800 tracking-wider text-sm">ਸਿੱਖ ਵਿਆਹ ਬਾਇਓਡਾਟਾ</h1>
+              </div>
+              {personalDetails.fullName && (
+                <h2 className="text-2xl font-serif font-bold text-slate-900 mt-2">{personalDetails.fullName}</h2>
+              )}
+            </div>
+            {personalDetails.photoUrl && (
+              <div className="flex justify-center mb-6">
+                <div className="w-32 h-40 overflow-hidden border-4 border-orange-500 rounded-lg shadow-lg">
+                  <img src={personalDetails.photoUrl} alt="Profile" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            )}
+            <div className={spacingClass}>
+              <section>
+                <h3 className={`font-serif font-bold text-orange-800 border-b-2 border-orange-300 pb-2 mb-4 ${textSizes.h3}`}>ਨਿੱਜੀ ਜਾਣਕਾਰੀ</h3>
+                <div className="space-y-1">
+                  <DetailRow label="ਜਨਮ ਤਾਰੀਖ" value={personalDetails.dob} />
+                  <DetailRow label="ਉਚਾਈ" value={personalDetails.height} />
+                  <DetailRow label="ਸਿੱਖਿਆ" value={personalDetails.education} />
+                  <DetailRow label="ਪੇਸ਼ਾ" value={personalDetails.occupation} />
+                </div>
+              </section>
+              {!(customization.hiddenSections || []).includes('family') && (
+                <section>
+                  <h3 className={`font-serif font-bold text-orange-800 border-b-2 border-orange-300 pb-2 mb-4 ${textSizes.h3}`}>ਪਰਿਵਾਰਕ ਜਾਣਕਾਰੀ</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="ਪਿਤਾ ਦਾ ਨਾਮ" value={familyDetails.fatherName} />
+                    <DetailRow label="ਮਾਤਾ ਦਾ ਨਾਮ" value={familyDetails.motherName} />
+                    <DetailRow label="ਪਰਿਵਾਰ ਦੀ ਕਿਸਮ" value={familyDetails.familyType} />
+                  </div>
+                </section>
+              )}
+              {!(customization.hiddenSections || []).includes('contact') && (
+                <section>
+                  <h3 className={`font-serif font-bold text-orange-800 border-b-2 border-orange-300 pb-2 mb-4 ${textSizes.h3}`}>ਸੰਪਰਕ</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="ਮੋਬਾਈਲ" value={contactDetails.mobile} />
+                    <DetailRow label="ਪਤਾ" value={contactDetails.address} />
+                  </div>
+                </section>
+              )}
+            </div>
+          </div>
+        );
+
+      // 9. CHRISTIAN (Cross motifs, elegant borders)
+      case 'christian':
+        return (
+          <div className="relative z-10 px-6 md:px-10 py-8">
+            <div className="text-center mb-6">
+              <div className="inline-block px-4 py-2 bg-blue-100 rounded-lg mb-3">
+                <h1 className="font-serif font-bold text-blue-800 tracking-wider text-sm">Christian Marriage Profile</h1>
+              </div>
+              {personalDetails.fullName && (
+                <h2 className="text-2xl font-serif font-bold text-slate-900 mt-2">{personalDetails.fullName}</h2>
+              )}
+            </div>
+            {personalDetails.photoUrl && (
+              <div className="flex justify-center mb-6">
+                <div className="w-32 h-40 overflow-hidden border-4 border-blue-500 rounded-lg shadow-lg">
+                  <img src={personalDetails.photoUrl} alt="Profile" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            )}
+            <div className={spacingClass}>
+              <section>
+                <h3 className={`font-serif font-bold text-blue-800 border-b-2 border-blue-300 pb-2 mb-4 ${textSizes.h3}`}>Personal Information</h3>
+                <div className="space-y-1">
+                  <DetailRow label="Date of Birth" value={personalDetails.dob} />
+                  <DetailRow label="Height" value={personalDetails.height} />
+                  <DetailRow label="Education" value={personalDetails.education} />
+                  <DetailRow label="Profession" value={personalDetails.occupation} />
+                </div>
+              </section>
+              {!(customization.hiddenSections || []).includes('family') && (
+                <section>
+                  <h3 className={`font-serif font-bold text-blue-800 border-b-2 border-blue-300 pb-2 mb-4 ${textSizes.h3}`}>Family Details</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="Father's Name" value={familyDetails.fatherName} />
+                    <DetailRow label="Mother's Name" value={familyDetails.motherName} />
+                    <DetailRow label="Family Type" value={familyDetails.familyType} />
+                  </div>
+                </section>
+              )}
+              {!(customization.hiddenSections || []).includes('contact') && (
+                <section>
+                  <h3 className={`font-serif font-bold text-blue-800 border-b-2 border-blue-300 pb-2 mb-4 ${textSizes.h3}`}>Contact</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="Mobile" value={contactDetails.mobile} />
+                    <DetailRow label="Email" value={contactDetails.email} />
+                    <DetailRow label="Address" value={contactDetails.address} />
+                  </div>
+                </section>
+              )}
+            </div>
+          </div>
+        );
+
+      // 10. BENGALI (Bengali cultural patterns, red/gold)
+      case 'bengali':
+        return (
+          <div className="relative z-10 px-6 md:px-10 py-8">
+            <div className="text-center mb-6">
+              <div className="inline-block px-4 py-2 bg-red-100 rounded-lg mb-3">
+                <h1 className="font-serif font-bold text-red-800 tracking-wider text-sm">বিয়ের বায়োডাটা</h1>
+              </div>
+              {personalDetails.fullName && (
+                <h2 className="text-2xl font-serif font-bold text-slate-900 mt-2">{personalDetails.fullName}</h2>
+              )}
+            </div>
+            {personalDetails.photoUrl && (
+              <div className="flex justify-center mb-6">
+                <div className="w-32 h-40 overflow-hidden border-4 border-red-600 rounded-lg shadow-lg">
+                  <img src={personalDetails.photoUrl} alt="Profile" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            )}
+            <div className={spacingClass}>
+              <section>
+                <h3 className={`font-serif font-bold text-red-800 border-b-2 border-red-300 pb-2 mb-4 ${textSizes.h3}`}>ব্যক্তিগত তথ্য</h3>
+                <div className="space-y-1">
+                  <DetailRow label="জন্ম তারিখ" value={personalDetails.dob} />
+                  <DetailRow label="উচ্চতা" value={personalDetails.height} />
+                  <DetailRow label="শিক্ষা" value={personalDetails.education} />
+                  <DetailRow label="পেশা" value={personalDetails.occupation} />
+                </div>
+              </section>
+              {!(customization.hiddenSections || []).includes('family') && (
+                <section>
+                  <h3 className={`font-serif font-bold text-red-800 border-b-2 border-red-300 pb-2 mb-4 ${textSizes.h3}`}>পারিবারিক তথ্য</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="পিতার নাম" value={familyDetails.fatherName} />
+                    <DetailRow label="মায়ের নাম" value={familyDetails.motherName} />
+                    <DetailRow label="পরিবারের ধরন" value={familyDetails.familyType} />
+                  </div>
+                </section>
+              )}
+              {!(customization.hiddenSections || []).includes('contact') && (
+                <section>
+                  <h3 className={`font-serif font-bold text-red-800 border-b-2 border-red-300 pb-2 mb-4 ${textSizes.h3}`}>যোগাযোগ</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="মোবাইল" value={contactDetails.mobile} />
+                    <DetailRow label="ঠিকানা" value={contactDetails.address} />
+                  </div>
+                </section>
+              )}
+            </div>
+          </div>
+        );
+
+      // 11. CONTEMPORARY (Modern blended with traditional elements)
+      case 'contemporary':
+        return (
+          <div className="relative z-10 px-8 md:px-12 py-8">
+            <div className="grid grid-cols-12 gap-6 mb-8">
+              <div className="col-span-8">
+                <h1 className="text-3xl font-light text-slate-900">{personalDetails.fullName || 'Name'}</h1>
+                <p className="text-sm text-slate-500 mt-1">Marriage Biodata</p>
+              </div>
+              {personalDetails.photoUrl && (
+                <div className="col-span-4">
+                  <div className="w-24 h-32 overflow-hidden rounded-lg bg-slate-100 shadow-md">
+                    <img src={personalDetails.photoUrl} alt="Profile" className="w-full h-full object-cover" />
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className={spacingClass}>
+              <section>
+                <h3 className={`font-semibold text-slate-700 border-b border-slate-200 pb-2 mb-4 ${textSizes.h3}`}>Personal Details</h3>
+                <div className="space-y-1">
+                  <DetailRow label="Date of Birth" value={personalDetails.dob} />
+                  <DetailRow label="Height" value={personalDetails.height} />
+                  <DetailRow label="Education" value={personalDetails.education} />
+                  <DetailRow label="Profession" value={personalDetails.occupation} />
+                </div>
+              </section>
+              {!(customization.hiddenSections || []).includes('family') && (
+                <section>
+                  <h3 className={`font-semibold text-slate-700 border-b border-slate-200 pb-2 mb-4 ${textSizes.h3}`}>Family Background</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="Father's Name" value={familyDetails.fatherName} />
+                    <DetailRow label="Mother's Name" value={familyDetails.motherName} />
+                    <DetailRow label="Family Type" value={familyDetails.familyType} />
+                  </div>
+                </section>
+              )}
+              {!(customization.hiddenSections || []).includes('contact') && (
+                <section>
+                  <h3 className={`font-semibold text-slate-700 border-b border-slate-200 pb-2 mb-4 ${textSizes.h3}`}>Contact Information</h3>
+                  <div className="space-y-1">
+                    <DetailRow label="Mobile" value={contactDetails.mobile} />
+                    <DetailRow label="Email" value={contactDetails.email} />
+                    <DetailRow label="Address" value={contactDetails.address} />
+                  </div>
+                </section>
+              )}
+            </div>
+          </div>
+        );
+
+      default:
+        return (
+          <div className="relative z-10 px-4 md:px-8 py-6">
+            {renderReligiousMotif()}
+            <div className="text-center mb-4">
+              <h1
+                className={`font-black tracking-widest uppercase font-serif ${textSizes.title}`}
+                style={{ color: customization.primaryColor }}
+              >
+                MARRIAGE BIODATA
+              </h1>
+              <div
+                className="h-1 w-24 mx-auto my-2.5 rounded-full"
+                style={{ backgroundColor: customization.primaryColor }}
+              />
+              {personalDetails.fullName && (
+                <h2 className="text-lg md:text-xl font-bold text-slate-800 dark:text-white tracking-tight mt-1">{personalDetails.fullName}</h2>
+              )}
+            </div>
+            {personalDetails.photoUrl && (
+              <div className="flex justify-center mb-4">
+                <div
+                  className="w-28 h-36 overflow-hidden bg-slate-50 dark:bg-slate-950 border-4 shadow-lg rounded"
+                  style={{ borderColor: customization.primaryColor }}
+                >
+                  <img src={personalDetails.photoUrl} alt="Matrimonial Candidate" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            )}
+            <div className={spacingClass}>
+              <section>
+                <h3
+                  className={`font-bold border-b pb-1.5 mb-3 text-left uppercase tracking-widest ${textSizes.h3}`}
+                  style={{ color: customization.primaryColor, borderColor: `${customization.primaryColor}30` }}
+                >
+                  Personal Particulars
+                </h3>
+                <div className="space-y-0.5">
+                  <DetailRow label="Date of Birth" value={personalDetails.dob} />
+                  <DetailRow label="Height" value={personalDetails.height} />
+                  <DetailRow label="Education" value={personalDetails.education} />
+                  <DetailRow label="Profession" value={personalDetails.occupation} />
+                </div>
+              </section>
+              {!(customization.hiddenSections || []).includes('family') && (
+                <section>
+                  <h3
+                    className={`font-bold border-b pb-1.5 mb-3 text-left uppercase tracking-widest ${textSizes.h3}`}
+                    style={{ color: customization.primaryColor, borderColor: `${customization.primaryColor}30` }}
+                  >
+                    Family Details
+                  </h3>
+                  <div className="space-y-0.5">
+                    <DetailRow label="Father's Name" value={familyDetails.fatherName} />
+                    <DetailRow label="Mother's Name" value={familyDetails.motherName} />
+                  </div>
+                </section>
+              )}
+              {!(customization.hiddenSections || []).includes('contact') && (
+                <section>
+                  <h3
+                    className={`font-bold border-b pb-1.5 mb-3 text-left uppercase tracking-widest ${textSizes.h3}`}
+                    style={{ color: customization.primaryColor, borderColor: `${customization.primaryColor}30` }}
+                  >
+                    Contact Information
+                  </h3>
+                  <div className="space-y-0.5">
+                    <DetailRow label="Mobile Number" value={contactDetails.mobile} />
+                    <DetailRow label="Email Address" value={contactDetails.email} />
+                    <DetailRow label="Residence Address" value={contactDetails.address} />
+                  </div>
+                </section>
+              )}
+            </div>
+          </div>
+        );
+    }
+  };
 
   return (
     <div
@@ -219,157 +982,7 @@ export const BiodataTemplateRenderer: React.FC<BiodataTemplateRendererProps> = (
       {renderTemplateBorderFrame()}
 
       {/* Main Inner wrapper */}
-      <div className="relative z-10 px-4 md:px-8 py-6">
-        
-        {/* Religious motif at center top */}
-        {renderReligiousMotif()}
-
-        {/* Title Block */}
-        <div className="text-center mb-4">
-          <h1
-            className={`font-black tracking-widest uppercase font-serif ${textSizes.title}`}
-            style={{ color: customization.primaryColor }}
-          >
-            {data.templateId === 'traditional' ? 'BIODATA' : 'MARRIAGE BIODATA'}
-          </h1>
-          <div
-            className="h-1 w-24 mx-auto my-2.5 rounded-full"
-            style={{ backgroundColor: customization.primaryColor }}
-          />
-          {personalDetails.fullName && (
-            <h2 className="text-lg md:text-xl font-bold text-slate-800 dark:text-white tracking-tight mt-1">{personalDetails.fullName}</h2>
-          )}
-        </div>
-
-        {/* Matrimonial Profile Picture upload display */}
-        {personalDetails.photoUrl && (
-          <div className="flex justify-center mb-4">
-            <div
-              className="w-28 h-36 overflow-hidden bg-slate-50 dark:bg-slate-950 border-4 shadow-lg rounded"
-              style={{ borderColor: customization.primaryColor }}
-            >
-              <img src={personalDetails.photoUrl} alt="Matrimonial Candidate" className="w-full h-full object-cover" />
-            </div>
-          </div>
-        )}
-
-        {/* Dynamic Detail grid spaces */}
-        <div className={spacingClass}>
-          
-          {/* Section 1: Personal Particulars */}
-          <section>
-            <h3
-              className={`font-bold border-b pb-1.5 mb-3 text-left uppercase tracking-widest ${textSizes.h3}`}
-              style={{ color: customization.primaryColor, borderColor: `${customization.primaryColor}30` }}
-            >
-              Personal Particulars
-            </h3>
-            <div className="space-y-0.5">
-              <DetailRow label="Date of Birth" value={personalDetails.dob} />
-              {!(customization.hiddenSections || []).includes('horoscope') && (
-                <>
-                  {personalDetails.timeOfBirth && <DetailRow label="Time of Birth" value={personalDetails.timeOfBirth} />}
-                  {personalDetails.placeOfBirth && <DetailRow label="Place of Birth" value={personalDetails.placeOfBirth} />}
-                  {personalDetails.rashi && <DetailRow label="Rashi (Zodiac)" value={personalDetails.rashi} />}
-                  {personalDetails.nakshatra && <DetailRow label="Nakshatra" value={personalDetails.nakshatra} />}
-                </>
-              )}
-              <DetailRow label="Height" value={personalDetails.height} />
-              {personalDetails.weight && <DetailRow label="Weight" value={personalDetails.weight} />}
-              {!(customization.hiddenSections || []).includes('horoscope') && (
-                <>
-                  <DetailRow label="Religion" value={personalDetails.religion} />
-                  {personalDetails.caste && <DetailRow label="Caste / Sub-Caste" value={personalDetails.caste} />}
-                  {personalDetails.gotra && <DetailRow label="Gotra" value={personalDetails.gotra} />}
-                  {personalDetails.manglik && <DetailRow label="Manglik Status" value={personalDetails.manglik} />}
-                </>
-              )}
-              <DetailRow label="Education" value={personalDetails.education} />
-              <DetailRow label="Profession" value={personalDetails.occupation} />
-              {personalDetails.salary && <DetailRow label="Annual Income" value={personalDetails.salary} />}
-              {personalDetails.hobbies && <DetailRow label="Hobbies & Interests" value={personalDetails.hobbies} />}
-            </div>
-          </section>
-
-          {/* Section 2: Family Background */}
-          {!(customization.hiddenSections || []).includes('family') && (familyDetails.fatherName || familyDetails.motherName) && (
-            <section>
-              <h3
-                className={`font-bold border-b pb-1.5 mb-3 text-left uppercase tracking-widest ${textSizes.h3}`}
-                style={{ color: customization.primaryColor, borderColor: `${customization.primaryColor}30` }}
-              >
-                Family Details
-              </h3>
-              <div className="space-y-0.5">
-                <DetailRow label="Father's Name" value={familyDetails.fatherName} />
-                {familyDetails.fatherOccupation && <DetailRow label="Father's Occupation" value={familyDetails.fatherOccupation} />}
-                <DetailRow label="Mother's Name" value={familyDetails.motherName} />
-                {familyDetails.motherOccupation && <DetailRow label="Mother's Occupation" value={familyDetails.motherOccupation} />}
-                {familyDetails.brothers && <DetailRow label="Brothers" value={familyDetails.brothers} />}
-                {familyDetails.sisters && <DetailRow label="Sisters" value={familyDetails.sisters} />}
-                {familyDetails.familyType && <DetailRow label="Family Setup" value={`${familyDetails.familyType} Family`} />}
-                {familyDetails.familyValues && <DetailRow label="Family Values" value={familyDetails.familyValues} />}
-              </div>
-            </section>
-          )}
-
-          {/* Section 3: Contacts */}
-          {!(customization.hiddenSections || []).includes('contact') && (
-            <section>
-              <h3
-                className={`font-bold border-b pb-1.5 mb-3 text-left uppercase tracking-widest ${textSizes.h3}`}
-                style={{ color: customization.primaryColor, borderColor: `${customization.primaryColor}30` }}
-              >
-                Contact Information
-              </h3>
-              <div className="space-y-0.5">
-                <DetailRow label="Mobile Number" value={contactDetails.mobile} />
-                {contactDetails.alternateMobile && <DetailRow label="Alternate Mobile" value={contactDetails.alternateMobile} />}
-                {contactDetails.email && <DetailRow label="Email Address" value={contactDetails.email} />}
-                <DetailRow label="Residence Address" value={contactDetails.address} />
-              </div>
-            </section>
-          )}
-
-          {/* Section 4: Partner expectations & Self summary */}
-          {!(customization.hiddenSections || []).includes('expectations') && (additionalInfo.aboutMe || additionalInfo.expectations || additionalInfo.languagesKnown) && (
-            <section>
-              <h3
-                className={`font-bold border-b pb-1.5 mb-3 text-left uppercase tracking-widest ${textSizes.h3}`}
-                style={{ color: customization.primaryColor, borderColor: `${customization.primaryColor}30` }}
-              >
-                Expectations & Profile
-              </h3>
-              <div className="space-y-4 text-left pt-2">
-                {additionalInfo.aboutMe && (
-                  <div>
-                    <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">About Me</h4>
-                    <p className={`text-slate-650 dark:text-slate-300 font-medium leading-relaxed whitespace-pre-line mt-1 ${textSizes.value}`}>
-                      {additionalInfo.aboutMe}
-                    </p>
-                  </div>
-                )}
-                {additionalInfo.expectations && (
-                  <div>
-                    <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Partner Expectations</h4>
-                    <p className={`text-slate-650 dark:text-slate-300 font-medium leading-relaxed whitespace-pre-line mt-1 ${textSizes.value}`}>
-                      {additionalInfo.expectations}
-                    </p>
-                  </div>
-                )}
-                {additionalInfo.languagesKnown && (
-                  <div className="flex items-center text-xs">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mr-2">Languages:</span>
-                    <span className={`text-slate-800 dark:text-slate-200 font-semibold ${textSizes.value}`}>{additionalInfo.languagesKnown}</span>
-                  </div>
-                )}
-              </div>
-            </section>
-          )}
-
-        </div>
-
-      </div>
+      {renderTemplateLayout()}
     </div>
   );
 };

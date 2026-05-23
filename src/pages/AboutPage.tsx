@@ -25,11 +25,11 @@ export const AboutPage: React.FC = () => {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="max-w-4xl mx-auto px-4 py-16 text-left space-y-12 relative"
+      className="max-w-4xl mx-auto px-4 py-16 text-left space-y-12 relative overflow-hidden"
     >
-      {/* Decorative background glows */}
-      <div className="absolute top-20 right-1/4 w-72 h-72 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-20 left-1/4 w-72 h-72 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Decorative background glows - hidden on mobile to prevent overflow */}
+      <div className="hidden md:block absolute top-20 right-1/4 w-72 h-72 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="hidden md:block absolute bottom-20 left-1/4 w-72 h-72 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* Intro */}
       <motion.section 

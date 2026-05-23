@@ -16,6 +16,16 @@ const TEMPLATES = [
   { id: 'fresher', name: 'Fresher Grid', desc: 'Puts education lists and academic achievements first on page layouts.', tag: 'Graduates' },
   { id: 'designer', name: 'Designer Layout', desc: 'Modern asymmetrical badges, visual headers, and border highlights.', tag: 'Asymmetric' },
   { id: 'onepage', name: 'One Page Compact', desc: 'Dense formatting grids optimized to prevent document overflow.', tag: 'Compact' },
+  { id: 'elegant', name: 'Elegant Serif', desc: 'Sophisticated serif fonts with gold accents and refined styling.', tag: 'Premium' },
+  { id: 'tech', name: 'Tech Dark Mode', desc: 'Dark theme with neon accents and futuristic code motifs.', tag: 'Developer' },
+  { id: 'academic', name: 'Academic CV', desc: 'Traditional academic CV style with formal serif typography.', tag: 'Academic' },
+  { id: 'startup', name: 'Startup Bold', desc: 'Bold colorful gradients with modern startup aesthetic.', tag: 'Startup' },
+  { id: 'consultant', name: 'Consultant Pro', desc: 'Professional blue/gray theme with clean lines and structure.', tag: 'Business' },
+  { id: 'creative-designer', name: 'Creative Art', desc: 'Artistic asymmetric layout for creative professionals.', tag: 'Artistic' },
+  { id: 'data-scientist', name: 'Data Scientist', desc: 'Clean data-focused minimal design with card layouts.', tag: 'Analytics' },
+  { id: 'executive-premium', name: 'Executive Premium', desc: 'Luxury navy/gold theme for senior executives.', tag: 'Executive' },
+  { id: 'medical', name: 'Medical Professional', desc: 'Clean professional design for healthcare professionals.', tag: 'Medical' },
+  { id: 'legal', name: 'Legal Formal', desc: 'Traditional serif design for legal professionals.', tag: 'Legal' },
 ];
 
 export const ResumeTemplatesPage: React.FC = () => {
@@ -46,10 +56,10 @@ export const ResumeTemplatesPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-left space-y-10 relative">
-      {/* Background decoration elements */}
-      <div className="absolute top-20 right-10 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-20 left-10 w-96 h-96 bg-violet-500/5 rounded-full blur-3xl pointer-events-none" />
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-left space-y-10 relative overflow-hidden">
+      {/* Background decoration elements - hidden on mobile to prevent overflow */}
+      <div className="hidden md:block absolute top-20 right-10 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="hidden md:block absolute bottom-20 left-10 w-96 h-96 bg-violet-500/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* Title */}
       <motion.div 

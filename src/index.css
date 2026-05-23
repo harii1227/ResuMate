@@ -96,11 +96,46 @@
 /* Native smooth scroll — no JS library needed */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* Prevent horizontal scroll on all elements */
+* {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Fix for mobile horizontal scroll */
+@media (max-width: 768px) {
+  * {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  img, svg, video, canvas {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 /* Ensure scrollable panels inside builder pages work independently */
 .overflow-y-auto {
   -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile preview scale wrapper — shrink A4 canvas to fit small screens */
+@media (max-width: 1023px) {
+  .mobile-preview-scale {
+    zoom: 0.72;
+  }
 }
 /* ===================================================
    LIGHT THEME BUTTON FIXES - ensure all buttons visible

@@ -16,6 +16,16 @@ const TEMPLATES = [
   { id: 'muslim', name: 'Islamic Emerald', desc: 'Islamic geometric frames, emerald banners, and star/crescent motifs.', tag: 'Regional' },
   { id: 'photocentric', name: 'Photo Highlight', desc: 'Places a dominant framed portrait block at the top header layout.', tag: 'Visual Focus' },
   { id: 'classic', name: 'Classic Cursive', desc: 'Subtle gray borders with calligraphic headers and cursive title elements.', tag: 'Classic' },
+  { id: 'elegant-wedding', name: 'Elegant Wedding', desc: 'Soft pastels with floral borders and romantic styling.', tag: 'Romantic' },
+  { id: 'premium-royal', name: 'Premium Royal', desc: 'Gold/cream royal palace theme with luxury styling.', tag: 'Luxury' },
+  { id: 'modern-minimal', name: 'Modern Minimal', desc: 'Clean contemporary minimal design with modern aesthetics.', tag: 'Contemporary' },
+  { id: 'traditional-north', name: 'Traditional North', desc: 'North Indian traditional style with Hindi labels.', tag: 'Regional' },
+  { id: 'traditional-south', name: 'Traditional South', desc: 'Enhanced South Indian temple style with Tamil labels.', tag: 'Regional' },
+  { id: 'islamic-elegant', name: 'Islamic Elegant', desc: 'Refined Islamic geometric patterns with elegant styling.', tag: 'Regional' },
+  { id: 'sikh', name: 'Sikh Cultural', desc: 'Sikh cultural elements with orange/blue theme and Punjabi labels.', tag: 'Regional' },
+  { id: 'christian', name: 'Christian Style', desc: 'Cross motifs with elegant blue borders and styling.', tag: 'Regional' },
+  { id: 'bengali', name: 'Bengali Cultural', desc: 'Bengali cultural patterns with red/gold theme and Bengali labels.', tag: 'Regional' },
+  { id: 'contemporary', name: 'Contemporary Blend', desc: 'Modern design blended with traditional elements.', tag: 'Modern' },
 ];
 
 export const BiodataTemplatesPage: React.FC = () => {
@@ -46,10 +56,10 @@ export const BiodataTemplatesPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-left space-y-10 relative">
-      {/* Background decoration elements */}
-      <div className="absolute top-20 right-10 w-96 h-96 bg-red-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-20 left-10 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-left space-y-10 relative overflow-hidden">
+      {/* Background decoration elements - hidden on mobile to prevent overflow */}
+      <div className="hidden md:block absolute top-20 right-10 w-96 h-96 bg-red-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="hidden md:block absolute bottom-20 left-10 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* Title */}
       <motion.div 

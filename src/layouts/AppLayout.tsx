@@ -126,11 +126,11 @@ export const AppLayout: React.FC = () => {
   const isBuilderPage = location.pathname === '/resume-builder' || location.pathname === '/biodata-builder';
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300">
-      
-      {/* Dynamic Background Gradients */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none dark:bg-indigo-600/5" />
-      <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none dark:bg-purple-600/5" />
+    <div className="min-h-screen flex flex-col overflow-x-hidden bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 w-full max-w-full">
+
+      {/* Dynamic Background Gradients - hidden on mobile to prevent overflow */}
+      <div className="hidden md:block absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none dark:bg-indigo-600/5" />
+      <div className="hidden md:block absolute top-1/3 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none dark:bg-purple-600/5" />
 
       {/* STICKY NAVBAR */}
       <nav className="no-print sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur border-b border-slate-200 dark:border-slate-800 transition-colors duration-200">

@@ -42,11 +42,11 @@ export const DownloadsPage: React.FC = () => {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-left space-y-12 relative"
+      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-left space-y-12 relative overflow-hidden"
     >
-      {/* Decorative background gradients */}
-      <div className="absolute top-10 left-10 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-red-500/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Decorative background gradients - hidden on mobile to prevent overflow */}
+      <div className="hidden md:block absolute top-10 left-10 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="hidden md:block absolute bottom-10 right-10 w-96 h-96 bg-red-500/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* Page Title */}
       <motion.div 

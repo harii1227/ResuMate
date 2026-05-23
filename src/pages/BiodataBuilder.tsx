@@ -27,6 +27,7 @@ export const BiodataBuilder: React.FC = () => {
   const previewRef = useRef<HTMLDivElement>(null);
 
   const [activeControlTab, setActiveControlTab] = useState<'content' | 'style'>('content');
+  const [mobilePanelTab, setMobilePanelTab] = useState<'edit' | 'preview'>('edit');
   const [draftTitle, setDraftTitle] = useState(biodata.titleName);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
@@ -88,10 +89,28 @@ export const BiodataBuilder: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row h-[calc(100vh-4rem)] overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-200">
-      
+    <div className="flex flex-col lg:flex-row h-[calc(100vh-4rem)] overflow-x-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-200">
+
+      {/* MOBILE TOP TAB SWITCHER: Edit / Preview */}
+      <div className="no-print lg:hidden flex border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shrink-0">
+        <button
+          onClick={() => setMobilePanelTab('edit')}
+          className={`flex-1 py-3 text-xs font-bold text-center border-b-2 transition-all ${mobilePanelTab === 'edit' ? 'border-red-500 text-red-500 bg-slate-50 dark:bg-slate-800' : 'border-transparent text-slate-500 dark:text-slate-400'}`}
+        >
+          ✏️ Edit Biodata
+        </button>
+        <button
+          onClick={() => setMobilePanelTab('preview')}
+          className={`flex-1 py-3 text-xs font-bold text-center border-b-2 transition-all ${mobilePanelTab === 'preview' ? 'border-red-500 text-red-500 bg-slate-50 dark:bg-slate-800' : 'border-transparent text-slate-500 dark:text-slate-400'}`}
+        >
+          👁️ Preview
+        </button>
+      </div>
+
       {/* 1. LEFT COLUMN: FORMS AND CUSTOMIZERS */}
-      <div className="no-print w-full lg:w-[480px] xl:w-[520px] flex flex-col h-full bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 shrink-0 relative z-10 shadow-sm">
+      <div className={`no-print w-full lg:w-[480px] xl:w-[520px] flex flex-col lg:h-full bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 lg:shrink-0 relative z-10 shadow-sm ${mobilePanelTab === 'edit' ? 'flex' : 'hidden lg:flex'}`}
+        style={{ height: mobilePanelTab === 'edit' ? 'calc(100vh - 4rem - 41px)' : undefined }}
+      >
         
         {/* Draft Title & Save header */}
         <div className="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex justify-between items-center gap-3">
@@ -306,14 +325,15 @@ export const BiodataBuilder: React.FC = () => {
       </div>
 
       {/* 2. RIGHT COLUMN: PREVIEW AND EXPORTS */}
-      <div className="flex-1 bg-slate-100 dark:bg-slate-900/40 p-6 overflow-y-auto flex flex-col items-center relative">
+      <div className={`flex-1 bg-slate-100 dark:bg-slate-900/40 p-4 lg:p-6 overflow-y-auto flex flex-col items-center relative ${mobilePanelTab === 'preview' ? 'flex' : 'hidden lg:flex'}`}>
         
 
         {/* Top actions bar */}
-        <div className="no-print max-w-[750px] w-full flex justify-between items-center mb-4 px-2">
+        <div className="no-print w-full max-w-full lg:max-w-[750px] flex justify-between items-center mb-4 px-2">
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center space-x-1.5">
             <span className="h-2 w-2 rounded-full bg-red-550 animate-pulse" />
-            <span>Matrimonial Canvas Sheet</span>
+            <span className="hidden sm:inline">Matrimonial Canvas Sheet</span>
+            <span className="sm:hidden">Preview</span>
           </span>
 
           <div className="flex gap-2">
@@ -321,7 +341,7 @@ export const BiodataBuilder: React.FC = () => {
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
               onClick={handlePrint}
-              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition-all shadow-lg shadow-red-500/20 flex items-center space-x-1.5 cursor-pointer"
+              className="px-3 py-2 lg:px-4 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition-all shadow-lg shadow-red-500/20 flex items-center space-x-1.5 cursor-pointer"
             >
               🖨️ <span>Print / Save PDF</span>
             </motion.button>
@@ -335,7 +355,9 @@ export const BiodataBuilder: React.FC = () => {
           transition={{ duration: 0.35, ease: 'easeOut' }}
           className="w-full flex-1 flex justify-center items-start print:p-0"
         >
-          <BiodataTemplateRenderer data={biodata} targetRef={previewRef} />
+          <div className="w-full mobile-preview-scale lg:max-w-[750px] lg:w-full">
+            <BiodataTemplateRenderer data={biodata} targetRef={previewRef} />
+          </div>
         </motion.div>
 
       </div>

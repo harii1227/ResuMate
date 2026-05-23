@@ -104,10 +104,10 @@ export const SettingsPage: React.FC = () => {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="max-w-3xl mx-auto px-4 py-12 text-left space-y-8 relative"
+      className="max-w-3xl mx-auto px-4 py-12 text-left space-y-8 relative overflow-hidden"
     >
-      {/* Background glow decoration */}
-      <div className="absolute top-10 right-10 w-80 h-80 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Background glow decoration - hidden on mobile to prevent overflow */}
+      <div className="hidden md:block absolute top-10 right-10 w-80 h-80 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="space-y-2 relative z-10">
         <motion.h1 

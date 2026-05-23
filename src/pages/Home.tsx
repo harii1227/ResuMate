@@ -71,14 +71,14 @@ export const Home: React.FC = () => {
   };
 
   return (
-    <div className="relative overflow-hidden font-sans">
+    <div className="relative overflow-x-hidden font-sans">
       
       {/* 1. HERO SECTION */}
-      <section className="relative pt-20 pb-24 md:pt-28 md:pb-32 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
-        
-        {/* Animated Background Gradients */}
-        <div className="absolute top-0 right-10 w-72 h-72 bg-violet-400/20 rounded-full blur-3xl pointer-events-none dark:bg-violet-600/10 animate-pulse" />
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-indigo-400/20 rounded-full blur-3xl pointer-events-none dark:bg-indigo-900/10" />
+      <section className="relative pt-20 pb-24 md:pt-28 md:pb-32 bg-slate-50 dark:bg-slate-950 transition-colors duration-300 overflow-hidden">
+
+        {/* Animated Background Gradients - hidden on mobile to prevent overflow */}
+        <div className="hidden md:block absolute top-0 right-10 w-72 h-72 bg-violet-400/20 rounded-full blur-3xl pointer-events-none dark:bg-violet-600/10 animate-pulse" />
+        <div className="hidden md:block absolute bottom-10 left-10 w-96 h-96 bg-indigo-400/20 rounded-full blur-3xl pointer-events-none dark:bg-indigo-900/10" />
 
         <motion.div 
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8 relative z-10"

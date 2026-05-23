@@ -588,6 +588,178 @@ export const ResumeTemplateRenderer: React.FC<ResumeTemplateRendererProps> = ({ 
           </div>
         );
 
+      // 11. ELEGANT (Sophisticated serif fonts, gold accents, refined)
+      case 'elegant':
+        return (
+          <div className={`p-8 bg-white text-slate-800 font-serif text-left ${spacingClass}`}>
+            <div className="text-center border-b-2 pb-4 mb-4" style={{ borderColor: customization.primaryColor }}>
+              <h1 className="text-3xl font-bold tracking-wide" style={{ color: customization.primaryColor }}>{personalDetails.fullName}</h1>
+              <p className="text-sm italic text-slate-600 mt-1">{personalDetails.jobTitle}</p>
+              <div className="flex justify-center gap-4 text-xs text-slate-500 mt-2">
+                {personalDetails.email && <span>{personalDetails.email}</span>}
+                {personalDetails.phone && <span>• {personalDetails.phone}</span>}
+                {personalDetails.address && <span>• {personalDetails.address}</span>}
+              </div>
+            </div>
+            {sectionOrder.map((secId) => renderSection(secId))}
+          </div>
+        );
+
+      // 12. TECH (Dark theme, neon accents, futuristic)
+      case 'tech':
+        return (
+          <div className={`p-6 bg-slate-950 text-emerald-400 font-mono text-left ${spacingClass}`}>
+            <div className="border-b border-emerald-500/30 pb-4 mb-4">
+              <h1 className="text-2xl font-bold text-white">&lt;{personalDetails.fullName} /&gt;</h1>
+              <p className="text-xs text-emerald-300 mt-1">// {personalDetails.jobTitle}</p>
+              <div className="grid grid-cols-2 gap-1 text-[10px] text-slate-400 mt-2">
+                {personalDetails.email && <span>email: {personalDetails.email}</span>}
+                {personalDetails.github && <span>github: {personalDetails.github}</span>}
+                {personalDetails.phone && <span>phone: {personalDetails.phone}</span>}
+                {personalDetails.linkedin && <span>linkedin: {personalDetails.linkedin}</span>}
+              </div>
+            </div>
+            {sectionOrder.map((secId) => renderSection(secId))}
+          </div>
+        );
+
+      // 13. ACADEMIC (Traditional academic CV, formal serif)
+      case 'academic':
+        return (
+          <div className={`p-7 bg-white text-slate-900 font-serif text-left ${spacingClass}`}>
+            <div className="text-center border-b-2 border-slate-300 pb-4 mb-5">
+              <h1 className="text-2xl font-bold uppercase tracking-wider">{personalDetails.fullName}</h1>
+              <p className="text-sm text-slate-600 mt-1">{personalDetails.jobTitle}</p>
+              <div className="text-xs text-slate-500 mt-2 space-y-0.5">
+                {personalDetails.email && <div>{personalDetails.email}</div>}
+                {personalDetails.phone && <div>{personalDetails.phone}</div>}
+                {personalDetails.address && <div>{personalDetails.address}</div>}
+              </div>
+            </div>
+            {sectionOrder.map((secId) => renderSection(secId))}
+          </div>
+        );
+
+      // 14. STARTUP (Bold, colorful, modern startup aesthetic)
+      case 'startup':
+        return (
+          <div className={`p-6 bg-white text-slate-800 font-sans text-left ${spacingClass}`}>
+            <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-5 rounded-xl mb-5">
+              <h1 className="text-2xl font-bold">{personalDetails.fullName}</h1>
+              <p className="text-sm opacity-90 mt-1">{personalDetails.jobTitle}</p>
+              <div className="flex gap-3 text-xs mt-2">
+                {personalDetails.email && <span>{personalDetails.email}</span>}
+                {personalDetails.phone && <span>• {personalDetails.phone}</span>}
+              </div>
+            </div>
+            {sectionOrder.map((secId) => renderSection(secId))}
+          </div>
+        );
+
+      // 15. CONSULTANT (Professional blue/gray, clean lines)
+      case 'consultant':
+        return (
+          <div className={`p-6 bg-white text-slate-700 font-sans text-left ${spacingClass}`}>
+            <div className="border-l-4 pl-4 mb-5" style={{ borderColor: customization.primaryColor }}>
+              <h1 className="text-2xl font-bold text-slate-900">{personalDetails.fullName}</h1>
+              <p className="text-sm font-semibold mt-1" style={{ color: customization.primaryColor }}>{personalDetails.jobTitle}</p>
+              <div className="flex gap-4 text-xs text-slate-500 mt-2">
+                {personalDetails.email && <span>{personalDetails.email}</span>}
+                {personalDetails.phone && <span>• {personalDetails.phone}</span>}
+                {personalDetails.linkedin && <span>• {personalDetails.linkedin}</span>}
+              </div>
+            </div>
+            {sectionOrder.map((secId) => renderSection(secId))}
+          </div>
+        );
+
+      // 16. CREATIVE DESIGNER (Artistic, asymmetric layout)
+      case 'creative-designer':
+        return (
+          <div className={`p-6 bg-white text-slate-800 text-left ${spacingClass}`}>
+            <div className="flex gap-6 mb-5">
+              <div className="flex-1">
+                <h1 className="text-3xl font-light text-slate-900">{personalDetails.fullName}</h1>
+                <p className="text-sm text-slate-500 mt-1">{personalDetails.jobTitle}</p>
+              </div>
+              <div className="text-right text-xs text-slate-400">
+                {personalDetails.email && <div>{personalDetails.email}</div>}
+                {personalDetails.phone && <div>{personalDetails.phone}</div>}
+              </div>
+            </div>
+            <div className="h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent mb-5" />
+            {sectionOrder.map((secId) => renderSection(secId))}
+          </div>
+        );
+
+      // 17. DATA SCIENTIST (Clean, data-focused, minimal)
+      case 'data-scientist':
+        return (
+          <div className={`p-6 bg-slate-50 text-slate-800 font-sans text-left ${spacingClass}`}>
+            <div className="bg-white p-4 rounded-lg shadow-sm mb-5">
+              <h1 className="text-xl font-bold text-slate-900">{personalDetails.fullName}</h1>
+              <p className="text-xs text-slate-500 mt-1">{personalDetails.jobTitle}</p>
+              <div className="flex gap-3 text-[10px] text-slate-400 mt-2">
+                {personalDetails.email && <span>{personalDetails.email}</span>}
+                {personalDetails.github && <span>• {personalDetails.github}</span>}
+                {personalDetails.linkedin && <span>• {personalDetails.linkedin}</span>}
+              </div>
+            </div>
+            {sectionOrder.map((secId) => renderSection(secId))}
+          </div>
+        );
+
+      // 18. EXECUTIVE PREMIUM (Luxury feel, navy/gold, formal)
+      case 'executive-premium':
+        return (
+          <div className={`p-8 bg-slate-900 text-slate-100 font-serif text-left ${spacingClass}`}>
+            <div className="border-b border-amber-500/30 pb-4 mb-5">
+              <h1 className="text-2xl font-bold text-amber-400">{personalDetails.fullName}</h1>
+              <p className="text-sm text-slate-300 mt-1">{personalDetails.jobTitle}</p>
+              <div className="flex gap-4 text-xs text-slate-400 mt-2">
+                {personalDetails.email && <span>{personalDetails.email}</span>}
+                {personalDetails.phone && <span>• {personalDetails.phone}</span>}
+                {personalDetails.linkedin && <span>• {personalDetails.linkedin}</span>}
+              </div>
+            </div>
+            {sectionOrder.map((secId) => renderSection(secId))}
+          </div>
+        );
+
+      // 19. MEDICAL (Clean, professional, medical field focused)
+      case 'medical':
+        return (
+          <div className={`p-6 bg-white text-slate-800 font-sans text-left ${spacingClass}`}>
+            <div className="border-t-4 border-teal-600 pt-4 mb-5">
+              <h1 className="text-2xl font-bold text-slate-900">{personalDetails.fullName}</h1>
+              <p className="text-sm text-teal-700 font-semibold mt-1">{personalDetails.jobTitle}</p>
+              <div className="grid grid-cols-2 gap-2 text-xs text-slate-500 mt-2">
+                {personalDetails.email && <span>{personalDetails.email}</span>}
+                {personalDetails.phone && <span>{personalDetails.phone}</span>}
+                {personalDetails.address && <span>{personalDetails.address}</span>}
+              </div>
+            </div>
+            {sectionOrder.map((secId) => renderSection(secId))}
+          </div>
+        );
+
+      // 20. LEGAL (Traditional, serif, formal legal style)
+      case 'legal':
+        return (
+          <div className={`p-7 bg-white text-slate-900 font-serif text-left ${spacingClass}`}>
+            <div className="text-center border-b-2 border-slate-800 pb-4 mb-5">
+              <h1 className="text-2xl font-bold uppercase">{personalDetails.fullName}</h1>
+              <p className="text-sm text-slate-600 mt-1">{personalDetails.jobTitle}</p>
+              <div className="text-xs text-slate-500 mt-2 space-y-0.5">
+                {personalDetails.email && <div>{personalDetails.email}</div>}
+                {personalDetails.phone && <div>{personalDetails.phone}</div>}
+                {personalDetails.address && <div>{personalDetails.address}</div>}
+              </div>
+            </div>
+            {sectionOrder.map((secId) => renderSection(secId))}
+          </div>
+        );
+
       default:
         return null;
     }
