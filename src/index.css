@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap');
+
+@import "tailwindcss";
+
+@variant dark (&:is(.dark *));
+
+/* Custom utility font families map to Tailwind styles */
+.font-sans {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.font-serif {
+  font-family: 'Playfair Display', Georgia, Cambria, serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.font-outfit {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* ===================================================
+   PRINT STYLES - Only print the resume/biodata canvas
+   =================================================== */
+@media print {
+  /* 1. Hide absolutely everything on the page */
+  body > * {
+    display: none !important;
+  }
+
+  /* 2. Show only #root and its containing chain */
+  body > #root {
+    display: block !important;
+  }
+
+  /* 3. Strip all wrapper divs so only the canvas shows */
+  #root,
+  #root > *,
+  #root > * > *,
+  #root > * > * > *,
+  #root > * > * > * > * {
+    display: block !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    border: none !important;
+    position: static !important;
+  }
+
+  /* 4. Hide all UI chrome - nav, footer, buttons, controls */
+  nav,
+  header,
+  footer,
+  aside,
+  .no-print,
+  [class*="no-print"] {
+    display: none !important;
+  }
+
+  /* 5. Hide the left control panel in builders */
+  .flex > div:first-child,
+  .lg\:w-\[480px\],
+  .xl\:w-\[520px\] {
+    display: none !important;
+  }
+
+  /* 6. The actual resume/biodata canvas */
+  #resume-render-root,
+  #biodata-render-root {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 16px !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    page-break-inside: avoid;
+  }
+
+  /* 7. Page setup */
+  @page {
+    margin: 0.5cm;
+    size: A4 portrait;
+  }
+}
+
+/* Native smooth scroll — no JS library needed */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ensure scrollable panels inside builder pages work independently */
+.overflow-y-auto {
+  -webkit-overflow-scrolling: touch;
+}
+/* ===================================================
+   LIGHT THEME BUTTON FIXES - ensure all buttons visible
+   =================================================== */
+
+/* Primary indigo buttons - always visible */
+button.bg-indigo-600,
+a.bg-indigo-600,
+[class*="bg-indigo-6"] {
+  color: #ffffff !important;
+}
+
+/* Save draft button fix - uses bg-indigo-605 (typo color) */
+.bg-indigo-605 {
+  background-color: #4f46e5 !important;
+  color: #ffffff !important;
+}
+
+/* Builder tab buttons in light mode */
+.bg-violet-600 {
+  color: #ffffff !important;
+}
